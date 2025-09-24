@@ -323,10 +323,10 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 If you use this code in your research, please cite:
 
 ```bibtex
-@software{pgn2024,
+@software{pgn2025,
   title = {Parallel Geometric Networks},
   author = {Prashant C. Raju},
-  year = {2024},
+  year = {2025},
   url = {https://github.com/prashantcraju/Parallel-Geometric-Networks}
 }
 ```
