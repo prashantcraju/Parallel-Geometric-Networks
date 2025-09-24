@@ -1,0 +1,106 @@
+# Default configuration for PGN training
+
+# Model configuration
+model:
+  type: "pgn"  # "pgn" or "hierarchical"
+  input_dim: 784
+  hidden_dim: 128
+  output_dim: 10
+  num_branches: 4
+  geometric_biases:
+    - "sparse"
+    - "orthogonal"
+    - "gaussian"
+    - "xavier"
+  use_synchronized_bn: true
+  use_temporal: false
+  dropout_rate: 0.0
+
+# Training configuration
+training:
+  epochs: 20
+  batch_size: 64
+  learning_rate: 0.001
+  optimizer: "adam"  # "adam", "sgd", "rmsprop"
+  weight_decay: 0.0
+  use_scheduler: true
+  scheduler:
+    type: "reduce_on_plateau"
+    patience: 3
+    factor: 0.5
+    min_lr: 1.0e-6
+  early_stopping:
+    enabled: false
+    patience: 10
+    min_delta: 0.001
+  gradient_clipping:
+    enabled: false
+    max_norm: 1.0
+
+# Data configuration
+data:
+  dataset: "mnist"  # "mnist", "cifar10", "custom"
+  data_dir: "./data"
+  num_workers: 4
+  pin_memory: true
+  augmentation:
+    enabled: false
+    random_crop: false
+    random_horizontal_flip: false
+    normalize: true
+  validation_split: 0.2
+
+# Analysis configuration
+analysis:
+  enabled: true
+  frequency: 5  # Run analysis every N epochs
+  metrics:
+    - "geometric_distance"
+    - "temporal_correlation"
+    - "branch_specialization"
+    - "effective_rank"
+  save_representations: false
+
+# Visualization configuration
+visualization:
+  enabled: true
+  save_plots: true
+  plot_format: "png"
+  dpi: 150
+  methods:
+    - "training_curves"
+    - "branch_representations"
+    - "model_comparison"
+  tsne:
+    perplexity: 30
+    n_iter: 1000
+    random_state: 42
+
+# Logging configuration
+logging:
+  level: "INFO"  # "DEBUG", "INFO", "WARNING", "ERROR"
+  tensorboard: false
+  tensorboard_dir: "./runs"
+  checkpoint_dir: "./checkpoints"
+  save_frequency: 5  # Save checkpoint every N epochs
+  keep_best_only: true
+
+# Hardware configuration
+hardware:
+  device: "auto"  # "auto", "cuda", "cpu"
+  cuda_device: 0
+  mixed_precision: false
+  deterministic: true
+  seed: 42
+
+# Experiment configuration
+experiment:
+  name: "pgn_mnist_experiment"
+  description: "Training PGN on MNIST dataset"
+  tags:
+    - "pgn"
+    - "mnist"
+    - "baseline_comparison"
+  output_dir: "./outputs"
+  save_config: true
+  save_code: false
